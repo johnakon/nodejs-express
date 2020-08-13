@@ -1,4 +1,4 @@
-<ins>Building a website with Node.js and Express</ins>
+<strong>Building a website with Node.js and Express</strong>
 
 This repository contains the code for course am following on LinkedIn Learning
 
