@@ -14,7 +14,7 @@ module.exports = (params) => {
     // eslint-disable-next-line no-console
     console.log(`Number of visits := ${req.session.visitCount}`);
 
-    res.render('pages/index.ejs', { pageTitle: 'Welcome' });
+    res.render('layout', { pageTitle: 'Welcome', template: 'index' });
   });
 
   router.use('/speakers', speakersRoute(params));
