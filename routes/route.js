@@ -6,15 +6,14 @@ const feedbackRoute = require('./feedback');
 const router = express.Router();
 
 module.exports = (params) => {
-  router.get('/', (req, res) => {
-    if (!req.session.visitCount) {
-      req.session.visitCount = 0;
-    }
-    req.session.visitCount += 1;
-    // eslint-disable-next-line no-console
-    console.log(`Number of visits := ${req.session.visitCount}`);
+  // get the speakers service first
+  const { speakerService } = params;
 
-    res.render('layout', { pageTitle: 'Welcome', template: 'index' });
+  router.get('/', async (req, res) => {
+    const topSpeakers = await speakerService.getList();
+    // eslint-disable-next-line no-console
+    console.log(topSpeakers);
+    res.render('layout', { pageTitle: 'Welcome', template: 'index', topSpeakers });
   });
 
   router.use('/speakers', speakersRoute(params));
