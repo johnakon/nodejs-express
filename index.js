@@ -16,6 +16,22 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, '/static')));
 
+// making a var available to all templates including the layout
+app.use(async (req, res, next) => {
+  // res.locals.someVaraible = 'hello';
+  // return next();
+
+  try {
+    const names = await speakerService.getNames();
+    res.locals.speakerNames = names;
+    // eslint-disable-next-line no-console
+    // console.log(res.locals);
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+});
+
 const port = 3000;
 
 app.set('trust proxy', 1);
@@ -29,6 +45,9 @@ app.use(
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, './views'));
+
+// there are vars set during start of app and available for the whole life cycle
+app.locals.siteName = 'ROUX Meetups';
 
 app.use(
   '/',
